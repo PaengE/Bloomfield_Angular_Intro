@@ -31,20 +31,30 @@
             <th>5 Star Rating</th>
           </tr>
         </thead>
-        <tbody  *ngIf="!showImage">
+        <tbody>
           <tr *ngFor='let product of products'>
-            <td>
+            <td *ngIf="!showImage">
               <img [src] = 'product.imageUrl'
                 [style.width.px] = 'imageWidth'
                 [style.margin.px] = 'imageMargin'>
 
             </td>
-            <td>{{ product.productName }}</td>
+            
+            <td>
+              <a [routerLink]="['/products', product.productId]">
+                {{ product.productName }}
+              </a>
+            </td>
+           
             <td>{{ product.productCode | lowercase | convertToSpace: '-' }}</td>
             <td>{{ product.releaseDate }}</td>
             <td>{{ product.price }}</td>
             <!-- <td>{{ product.starRating}}</td> -->
-            <td><pm-star [rating]='product.starRating'></pm-star></td>
+            <td>
+              <pm-star [rating]='product.starRating' (notify)='onNotify($event)'>
+
+              </pm-star>
+            </td>
           </tr>
         </tbody>
       </table>
